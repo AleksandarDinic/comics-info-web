@@ -23,7 +23,7 @@
              />
             </fieldset>
 
-            <button class="btn btn-lg btn-primary pull-xs-right">
+            <button :disabled='!isSendEnabled || this.message.length <= 0' class="btn btn-lg btn-primary pull-xs-right">
               Send
             </button>
           </form>
@@ -40,19 +40,28 @@ export default {
   name: "Support",
   data() {
     return {
+      isSendEnabled: true,
       email: null,
       message: ""
     };
   },
   methods: {
     onSubmit() {
+      this.isSendEnabled = false
       this.$store
         .dispatch(FEEDBACK_CREATE, {
           email: this.email,
           message: this.message,
           origin: "WEB"
         })
-        .then(() => this.$router.push({ name: "home" }));
+        .then(() => {
+            this.isSendEnabled = true;
+            this.$alert("Thank you for your feedback 🤗")
+        })
+        .catch(() => {
+            this.isSendEnabled = true;
+            this.$alert("Something went wrong. Please try again later ❤️")
+        });
     }
   }
 };

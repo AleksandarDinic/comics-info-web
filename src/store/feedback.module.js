@@ -1,17 +1,17 @@
-import {
-  FeedbackService
-} from "@/common/api.service";
+import ApiService from "@/common/api.service";
 import {
   FEEDBACK_CREATE
 } from "./actions.type";
 import {
-  SET_FEEDBACK
+  SET_FEEDBACK, 
+  SET_ERROR
 } from "./mutations.type";
 
 const initialState = {
+  errors: null,
   feedback: {
     email: null,
-    message: "",
+    message: null,
     origin: "WEB"
   }
 };
@@ -19,8 +19,12 @@ const initialState = {
 export const state = { ...initialState };
 
 export const actions = {
-  [FEEDBACK_CREATE]({ state }) {
-    return FeedbackService.post(state.feedback);
+  async [FEEDBACK_CREATE](context, feedback) {
+      ApiService.setHeader();
+      await ApiService.post("feedback", feedback)
+        .then(({ data }) => {
+          context.commit(SET_FEEDBACK, data.feedback);
+        });
   }
 };
 
@@ -28,7 +32,10 @@ export const actions = {
 export const mutations = {
   [SET_FEEDBACK](state, feedback) {
     state.feedback = feedback;
-  }
+  },
+  [SET_ERROR](state, error) {
+    state.errors = error;
+  },
 };
 
 const getters = {

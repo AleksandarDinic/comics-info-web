@@ -10,11 +10,7 @@ const ApiService = {
   },
 
   setHeader() {
-    Vue.axios.defaults.headers = [
-      { "Content-Type": "application/json" },
-      { "Access-Control-Allow-Headers": "Content-Type" },
-      { "Access-Control-Allow-Origin": "*" }
-    ];
+    Vue.axios.defaults.headers.common['Content-Type'] = 'application/json'
   },
 
   query(resource, params) {
@@ -51,10 +47,8 @@ const ApiService = {
 export default ApiService;
 
 export const FeedbackService = { 
-    post(payload) {
+    async post(feedback) {
       ApiService.setHeader();
-      return ApiService.post(`feedback`, {
-          feedback: { body: payload }
-        });
+      return await ApiService.post(`feedback`, feedback);
     },
 };
