@@ -51,8 +51,7 @@ export default {
       this.$store
         .dispatch(FEEDBACK_CREATE, {
           email: this.email,
-          message: this.message,
-          origin: "WEB"
+          message: this.message
         })
         .then(() => {
             this.isSendEnabled = true;

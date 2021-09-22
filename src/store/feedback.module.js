@@ -11,8 +11,7 @@ const initialState = {
   errors: null,
   feedback: {
     email: null,
-    message: null,
-    origin: "WEB"
+    message: null
   }
 };
 
