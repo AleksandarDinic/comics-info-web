@@ -21,13 +21,6 @@ export default new Router({
       name: "support",
       path: "/support",
       component: () => import("@/views/Support")
-    },
-    {
-      path: "/apple-app-site-association",
-      component: () => import("@/views/WellKnown"),
-      props: {
-        file: "https://s3.amazonaws.com/infoaboutcomics.com/apple-app-site-association"
-      }
     }
   ]
 });
